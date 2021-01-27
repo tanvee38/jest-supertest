@@ -4,6 +4,7 @@ package-lock.json
 
 # test results
 /test-results/*
+/allure-results/*
 
 # IDE - VSCode
 .vscode/*
