@@ -1,0 +1,9 @@
+# dependencies
+/node_modules
+package-lock.json
+
+# test results
+/test-results/*
+
+# IDE - VSCode
+.vscode/*
