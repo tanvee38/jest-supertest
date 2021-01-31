@@ -8,7 +8,7 @@ describe(`API Tests with Supertest`, () => {
   test('Simple test', async () => {
     const response = await request.get(`/api/users?page=2`);
 
-    const result = JSONPath({path: "$..data[?(@.first_name==='Michael')].last_name", json: response.body});
+    const result = JSONPath({path: "data[?(@.first_name==='Michael')].last_name", json: response.body});
 
     expect(result[0]).toBe('Lawson');
   });
