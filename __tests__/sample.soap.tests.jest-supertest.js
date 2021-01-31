@@ -1,5 +1,7 @@
 jest.setTimeout(30000);
 
+var parser = require('xml2json');
+
 const request = require('supertest')('https://www.w3schools.com/xml/tempconvert.asmx?op=FahrenheitToCelsius');
 
 describe(`SOAP API Tests with Supertest`, () => {
@@ -14,12 +16,16 @@ describe(`SOAP API Tests with Supertest`, () => {
       </soap:Body>
     </soap:Envelope>`;
 
-    const res = await request.post('/')
+    const response = await request.post('/')
     .set('Content-Type', 'text/xml')
     .send(itemXML);
 
-    console.log(res.text);
+    const responseJson = JSON.parse(parser.toJson(response.text));
 
-    expect(res.status).toBe(200);
+    const convertedTemp = responseJson['soap:Envelope']['soap:Body']['FahrenheitToCelsiusResponse']['FahrenheitToCelsiusResult'];
+
+    expect(response.status).toBe(200);
+
+    expect(convertedTemp).toBe('38');
   });
 })
