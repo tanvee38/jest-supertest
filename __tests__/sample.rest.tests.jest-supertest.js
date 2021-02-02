@@ -2,14 +2,20 @@ jest.setTimeout(30000);
 
 const {JSONPath} = require('jsonpath-plus');
 
-const request = require('supertest')('https://reqres.in');
+const baseURL = 'https://localhost:45678';
+
+const request = require('supertest')(baseURL);
 
 describe(`API Tests with Supertest`, () => {
   test('Simple test', async () => {
-    const response = await request.get(`/api/users?page=2`);
+    const pidm = 943299;
 
-    const result = JSONPath({path: "data[?(@.first_name==='Michael')].last_name", json: response.body});
+    const response = await request.get(`/student-registration-service/student-registration/by/student/pidm/${pidm}`).trustLocalhost();
 
-    expect(result[0]).toBe('Lawson');
+    const result = response.body[0];
+
+    expect(response.status).toBe(200);
+
+    expect(result.key.pidm).toBe(943299);
   });
 })
